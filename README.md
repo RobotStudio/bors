@@ -125,6 +125,23 @@ class MyAPI(LoggerMixin):
 ```
 Here we use the built-in `Req` class to issue requests to the API, we assign the `request_schema` and `result_schema` to classes in our object, and we set the `name`, `context`, and `call` attributes.  The results passed through on the API are referencable from within the middleware context under the key `my_api`.
 
+### Pulling it all together
+
+```python
+from bors.app.builder import AppBuilder
+from bors.app.strategy import Strategy
+
+
+def main():
+    strat = Strategy(Print())
+    app = AppBuilder([MyAPI], strat)
+    app.run()
+    
+if __name__ == "__main__":
+    main()
+```
+Here, we set as many strategies and API's as we want, then create and run the `app`.
+
 # Architecture
       +------------+
     +-+ MIDDLEWARE +------> out
