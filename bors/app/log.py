@@ -1,8 +1,8 @@
 """Log Util"""
 
-from common.singleton import Singleton
-from common.logger import Logger as L
-from app.config import AppConf
+from bors.common.singleton import Singleton
+from bors.common.logger import Logger as L
+from bors.app.config import AppConf
 
 
 class Logger(metaclass=Singleton):

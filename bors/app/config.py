@@ -2,8 +2,8 @@
 
 from collections import namedtuple
 
-from common.singleton import Singleton
-from generics.config import ConfSchema
+from bors.common.singleton import Singleton
+from bors.generics.config import ConfSchema
 
 
 Credentials = namedtuple('Credentials', ('api', 'secret'))

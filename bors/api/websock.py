@@ -2,7 +2,7 @@
 
 from socketclusterclient import Socketcluster
 
-from app.log import LoggerMixin
+from bors.app.log import LoggerMixin
 
 
 class SockMixin:

@@ -3,13 +3,11 @@ Generic response types
 """
 
 from marshmallow import fields, Schema, post_load, pre_load
-from api.response import Result, RESPONSE_MAP
+from bors.api.response import Result, RESPONSE_MAP
 
 
 class DefaultSchema(Schema):
     """Default schema parser"""
-    #MessageType = fields.Str(required=True)
-
     @post_load
     def generate_obj(self, data):  # pylint: disable=no-self-use
         """Generate new schema based on message type"""

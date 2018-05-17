@@ -6,7 +6,7 @@ from multiprocessing import Process
 import sched
 import time
 
-from api.product import ApiProduct  # pylint: disable=E0611,E0401
+from bors.api.product import ApiProduct  # pylint: disable=E0611,E0401
 
 
 class ApiAdapter(ApiProduct):

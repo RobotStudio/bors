@@ -2,11 +2,11 @@
 API Core
 """
 
-from app.log import LoggerMixin
-from common.factory import BasicFactory
+from bors.app.log import LoggerMixin
+from bors.common.factory import BasicFactory
 
-from api.adapter.api import ApiAdapter
-from api.adapter.ws import WsAdapter
+from bors.api.adapter.api import ApiAdapter
+from bors.api.adapter.ws import WsAdapter
 
 
 class ApiMetaAdapter(LoggerMixin):

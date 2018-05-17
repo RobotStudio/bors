@@ -1,10 +1,10 @@
 """
 Build the context and pipeline; manage the API
 """
-from app.log import LoggerMixin
-from app.api_factory import ApiMetaAdapter
-from app.config import AppConf
-from generics.context import ApiContextSchema, StrategyContextSchema
+from bors.app.log import LoggerMixin
+from bors.app.api_factory import ApiMetaAdapter
+from bors.app.config import AppConf
+from bors.generics.context import ApiContextSchema, StrategyContextSchema
 
 
 class AppBuilder(LoggerMixin):

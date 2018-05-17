@@ -2,7 +2,7 @@
 API Core
 """
 
-from app.log import LoggerMixin
+from bors.app.log import LoggerMixin
 
 
 class ApiProduct(LoggerMixin):

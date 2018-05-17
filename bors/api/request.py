@@ -2,7 +2,7 @@
 Generic API Interface, mixin, and request maps/types
 """
 
-from generics import exchange as X
+from bors.generics import exchange as X
 
 
 REQUEST_MAP = {

@@ -2,7 +2,7 @@
 
 import requests
 
-from common.singleton import Singleton
+from bors.common.singleton import Singleton
 
 
 class Req(metaclass=Singleton):
