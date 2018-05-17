@@ -13,25 +13,9 @@ class Conf:
         return self.conf.get(*args, **kwargs)
 
 
-class ApiEndpointConfSchema(Schema):
-    """API endpoint configuration object"""
-    rest = fields.Str()
-    websocket = fields.Str()
-
-
-class ApiCredsConfSchema(Schema):
-    """API credentials configuration object"""
-    apikey = fields.Str()
-    secret = fields.Str()
-
-
 class ApiServiceConfSchema(Schema):
     """API service configuration object"""
     name = fields.Str(required=True)
-    credentials = fields.Nested(ApiCredsConfSchema())
-    subscriptions = fields.Dict()
-    exchanges = fields.List(fields.Str())
-    endpoints = fields.Nested(ApiEndpointConfSchema())
 
 
 class ApiConfSchema(Schema):
@@ -42,7 +26,7 @@ class ApiConfSchema(Schema):
 
 class LogConfSchema(Schema):
     """Log configuration object"""
-    level = fields.Str(required=True)
+    level = fields.Str()
     modules = fields.Dict(
         fields.Nested('self',
                       many=True,
@@ -53,7 +37,6 @@ class LogConfSchema(Schema):
 
 class ConfSchema(Schema):
     """Root configuration schema"""
-    currencies = fields.List(fields.Str())
     logger = fields.Nested(LogConfSchema())
     api = fields.Nested(ApiConfSchema())
 

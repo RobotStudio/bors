@@ -50,8 +50,9 @@ class ApiAdapter(ApiProduct):
             except AttributeError:
                 action = callname
         if action is not None:
-            self.api.log.debug(
-                f"Using API's override for /{callname}: /{action}")
+            if hasattr(self.api, "log"):
+                self.api.log.debug(
+                    f"Using API's override for /{callname}: /{action}")
 
         # Define a mock method if one doesn't exist
         def mthd(args=None):

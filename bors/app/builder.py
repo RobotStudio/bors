@@ -3,7 +3,6 @@ Build the context and pipeline; manage the API
 """
 from bors.app.log import LoggerMixin
 from bors.app.api_factory import ApiMetaAdapter
-from bors.app.config import AppConf
 from bors.generics.context import ApiContextSchema, StrategyContextSchema
 
 
@@ -42,7 +41,6 @@ class AppBuilder(LoggerMixin):
             "inst": [],
             "conf": self.conf.get_api(cls.name),
             "calls": self.conf.get_api_calls(),
-            "currencies": self.conf.get_currencies(),
             "shared": {},  # Used per-API to monitor state
             "callback": self.receive
             })

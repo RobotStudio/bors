@@ -21,6 +21,8 @@ class ApiMetaAdapter(LoggerMixin):
 
         for name, context in contexts.items():
             self.log.debug(f"Starting API: {name}")
+            self.log.debug(f"{name}: {context}")
+
             wsock = BasicFactory(WsAdapter)
             wsock.product.interface(context)
             self.wsocks.append(wsock.product)

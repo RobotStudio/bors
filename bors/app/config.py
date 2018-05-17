@@ -35,7 +35,7 @@ class AppConf(metaclass=Singleton):
 
         data = DEFAULT_CONFIG.copy()
         dict_merge(data, config)
-        self.conf = ConfSchema().loads(data).data
+        self.conf = ConfSchema().load(data).data
 
     def get_api_services_by_name(self):
         """Return a dict of services by name"""

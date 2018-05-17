@@ -28,17 +28,18 @@ class WsAdapter(ApiProduct):
             self.api.on_ws_connect(*args, **kwargs)
 
         # Initialize websocket in a thread with channels
-        self.thread = Process(target=self.api.connect_ws, args=(
-            on_ws_connect, [
-                SockChannel(channel, res_type, self._generate_result)
-                for channel, res_type in
-                self
-                .context
-                .get("conf")
-                .get("subscriptions")
-                .items()
-            ]))
-        self.thread.start()
+        if hasattr(self.api, "on_ws_connect"):
+            self.thread = Process(target=self.api.connect_ws, args=(
+                on_ws_connect, [
+                    SockChannel(channel, res_type, self._generate_result)
+                    for channel, res_type in
+                    self
+                    .context
+                    .get("conf")
+                    .get("subscriptions")
+                    .items()
+                ]))
+            self.thread.start()
 
     def wscall(self, *args, **kwargs):
         """Passthrough method"""
