@@ -11,8 +11,8 @@ class AppBuilder(LoggerMixin):
     """Class that assembles and runs the application"""
     name = "builder"
 
-    def __init__(self, api_classes, strategy, config_file=None):
-        self.conf = AppConf(config_file)
+    def __init__(self, api_classes, strategy, config):
+        self.conf = config
 
         self.api_contexts = {}  # type: dict
 

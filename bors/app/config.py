@@ -3,13 +3,24 @@
 from collections import namedtuple
 
 from bors.common.singleton import Singleton
+from bors.common.dict_merge import dict_merge
 from bors.generics.config import ConfSchema
 
 
 Credentials = namedtuple('Credentials', ('api', 'secret'))
 
 
-DEFAULT_CONFIG_FILE = "config.json"
+DEFAULT_CONFIG = {
+    "api": {
+        "ratelimit": 1,
+        "services": [],  # API services to interact with
+        "calls": {},  # Calls made to the given API
+    },
+    "logger": {
+        "level": "DEBUG",
+        "modules": {},  # Module-level log levels
+    }
+}
 
 
 class AppConf(metaclass=Singleton):
@@ -17,23 +28,14 @@ class AppConf(metaclass=Singleton):
     conf = None
     services_by_name = {}  # type: dict
 
-    def __init__(self, config_file=None):
+    def __init__(self, config=None):
         # Bail if we've been loaded before
         if self.conf is not None:
             return
 
-        if config_file is None:
-            self.config_file = DEFAULT_CONFIG_FILE
-        else:
-            self.config_file = config_file
-
-        try:
-            with open(self.config_file) as json_data:
-                data = json_data.read()
-                self.conf = ConfSchema().loads(data).data
-        except:  # NOQA
-            raise Exception(
-                f"Could not source config file: {self.config_file}")
+        data = DEFAULT_CONFIG.copy()
+        dict_merge(data, config)
+        self.conf = ConfSchema().loads(data).data
 
     def get_api_services_by_name(self):
         """Return a dict of services by name"""
@@ -75,14 +77,6 @@ class AppConf(metaclass=Singleton):
                     .copy()
         except AttributeError:
             raise Exception(f"Couldn't find the API endpoints")
-
-    def get_currencies(self):
-        """Returns the currencies that we'll be working with"""
-        try:
-            return self.conf.get("currencies").copy()
-        except AttributeError:
-            raise Exception(f"Couldn't find the currencies in the \
-                            configuration")
 
     def get_ws_subscriptions(self, apiname):
         """Returns the websocket subscriptions"""
