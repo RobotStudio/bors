@@ -102,3 +102,15 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Local configuration
+config.json
+
+# Random / misc
+archive
+*.bak
+backup
+
+# neomake
+.*@neomake*
+fix_perms.sh
