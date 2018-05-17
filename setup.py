@@ -15,6 +15,7 @@ setup(
     packages=[
         'bors',
         'bors.api',
+        'bors.api.adapter',
         'bors.app',
         'bors.common',
         'bors.generics',
