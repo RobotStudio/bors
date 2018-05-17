@@ -15,7 +15,7 @@ class GenericSchema(Schema):
     """Schema from which all other schemas should inherit"""
     @post_load
     def make_object(self, data):  # pylint: disable=no-self-use
-        """Generate an object for passing to the exchange API"""
+        """Generate an object for passing to the API"""
         return GenericObject(data)
 
 
