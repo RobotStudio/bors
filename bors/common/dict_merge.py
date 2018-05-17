@@ -11,7 +11,7 @@ def dict_merge(dct, merge_dct=None):
     :return: None
     """
     if merge_dct is not None:
-        for k, v in merge_dct.iteritems():
+        for k, v in merge_dct.items():
             if (k in dct and isinstance(dct[k], dict)
                     and isinstance(merge_dct[k], collections.Mapping)):
                 dict_merge(dct[k], merge_dct[k])
