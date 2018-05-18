@@ -5,12 +5,12 @@
 from marshmallow import Schema, fields, post_load
 
 from bors.app.strategy import IStrategy
-from bors.api.request import Request
-from bors.api.response import Result
-
 from bors.app.config import AppConf
 from bors.app.builder import AppBuilder
 from bors.app.strategy import Strategy
+
+from bors.algorithms.echo import echo
+from bors.common.dotobj import DotObj
 
 
 class MockItemSchema(Schema):
@@ -25,10 +25,28 @@ class Print(IStrategy):
         """
         Bind the strategy to the middleware pipeline returning the context
         """
-        print(f"""PrintStrategy: {context}""")
+        echo(f"""PrintStrategy: {context['result'].data['callname']}""")
 
         # just a pass-through
         return context
+
+
+class Request:
+    """A bare request object"""
+    def __init__(self, **kwargs):
+        self.callname = kwargs.get('callname', None)
+        self.payload = kwargs.get('payload', None)
+
+
+class Result(DotObj):
+    """A bare result object"""
+    def __init__(self, **kwargs):
+        self.callname = kwargs.get('callname', None)
+        self.channel = kwargs.get('channel', None)
+        self.response_type = kwargs.get('response_type', None)
+        self.result = kwargs.get('result', None)
+        self.errors = kwargs.get('errors', None)
+        super().__init__(**kwargs)
 
 
 class RequestSchema(Schema):
@@ -94,10 +112,18 @@ def main():
             ],
             "calls": {
                 "hello_world": {
-                    "delay": 1,
+                    "delay": 5,
                     "priority": 1,
                     "arguments": None,
-                }
+                },
+                "marco": {
+                    "delay": 1,
+                    "priority": 1,
+                },
+                "pollo": {
+                    "delay": 1,
+                    "priority": 1,
+                },
             }
         }
     }
