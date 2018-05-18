@@ -103,3 +103,7 @@ class AppConf(metaclass=Singleton):
             return self.services_by_name.get(name).copy()
         except:  # NOQA
             raise Exception(f"Couldn't find the API configuration")
+
+    def get_log_level(self):
+        """Returns the configured log level"""
+        return self.conf.get("log_level", "INFO")

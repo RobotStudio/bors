@@ -2,6 +2,8 @@
 
 import logging
 
+from bors.app.config import AppConf
+
 
 class LoggerMixin:
     """Mixin to be used to simplify the logging interface"""
@@ -10,4 +12,8 @@ class LoggerMixin:
         name = "bors"
         if hasattr(self, "name"):
             name = self.name
+
+        conf = AppConf()
         self.log = logging.getLogger(name)
+        self.log.setLevel(
+            getattr(logging, conf.get_log_level(), logging.INFO))
