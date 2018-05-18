@@ -2,8 +2,8 @@
 Simple context display strategy
 """
 
-from app.strategy import IStrategy
-from algorithms.echo import echo
+from bors.app.strategy import IStrategy
+from bors.algorithms.echo import echo
 
 
 class Print(IStrategy):
