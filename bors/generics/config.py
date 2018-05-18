@@ -19,25 +19,14 @@ class ApiServiceConfSchema(Schema):
 
 
 class ApiConfSchema(Schema):
-    """Log configuration object"""
+    """API configuration object"""
     calls = fields.Dict()
     services = fields.List(fields.Nested(ApiServiceConfSchema()))
 
 
-class LogConfSchema(Schema):
-    """Log configuration object"""
-    level = fields.Str()
-    modules = fields.Dict(
-        fields.Nested('self',
-                      many=True,
-                      exclude=('modules',),
-                      default=None)
-        )
-
-
 class ConfSchema(Schema):
     """Root configuration schema"""
-    logger = fields.Nested(LogConfSchema())
+    log_level = fields.Str()
     api = fields.Nested(ApiConfSchema())
 
     @post_load

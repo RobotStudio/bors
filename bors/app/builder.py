@@ -65,6 +65,6 @@ class AppBuilder(LoggerMixin):
         """Shut it down"""
         if not self.exit:
             self.exit = True
-            self.log.info(f"SIGTRAP!{signum};{frame}")
+            self.log.debug(f"SIGTRAP!{signum};{frame}")
             self.api.shutdown()
             self.strat.shutdown()

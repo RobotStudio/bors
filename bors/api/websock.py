@@ -31,6 +31,7 @@ class SockMixin:
     def on_ws_connect(self):
         """
         Called after websock is established; override me to further init
+        your API
         """
         pass
 

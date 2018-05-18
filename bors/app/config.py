@@ -16,10 +16,7 @@ DEFAULT_CONFIG = {
         "services": [],  # API services to interact with
         "calls": {},  # Calls made to the given API
     },
-    "logger": {
-        "level": "DEBUG",
-        "modules": {},  # Module-level log levels
-    }
+    "log_level": "INFO",
 }
 
 
@@ -106,13 +103,3 @@ class AppConf(metaclass=Singleton):
             return self.services_by_name.get(name).copy()
         except:  # NOQA
             raise Exception(f"Couldn't find the API configuration")
-
-    def get_logger(self, name=None):
-        """Return a logger configuration object"""
-        logconf = self.conf.get("logger").copy()
-        upd = logconf.pop('modules', None)
-        try:
-            logconf.update(upd[name])
-        except KeyError:
-            pass
-        return logconf
