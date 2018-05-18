@@ -33,5 +33,5 @@ setup(
     author_email='karma0@gmail.com',
     url='https://github.com/RobotStudio/bors',
     license='GPL',
-    install_requires=['marshmallow', 'requests'],
+    install_requires=['marshmallow', 'requests', 'socketclusterclient'],
 )
