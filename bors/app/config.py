@@ -22,12 +22,12 @@ DEFAULT_CONFIG = {
 class AppConf:
     """Application-wide configuration singleton"""
     conf = None
+    raw_conf = DEFAULT_CONFIG.copy()
     services_by_name = {}  # type: dict
 
     def __init__(self, config=None):
-        data = DEFAULT_CONFIG.copy()
-        dict_merge(data, config)
-        self.conf = ConfSchema().load(data).data
+        dict_merge(self.raw_conf, config)
+        self.conf = ConfSchema().load(self.raw_conf).data
 
     def get_api_services_by_name(self):
         """Return a dict of services by name"""
@@ -46,7 +46,6 @@ class AppConf:
                 .get("services")
                 .get(apiname)
                 .get("credentials")
-                .get("apikey")
                 .copy(),
 
                 secret=self.data
@@ -54,7 +53,6 @@ class AppConf:
                 .get("services")
                 .get(apiname)
                 .get("credentials")
-                .get("secret")
                 .copy(),
                 )
         except AttributeError:
