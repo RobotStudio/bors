@@ -45,7 +45,7 @@ class AppConf:
 
     def get_api_credentials(self, apiname):
         """Returns a Credentials object for API access"""
-        for svc in self.data.get("api").get("services"):
+        for svc in self.conf.get("api").get("services"):
             if svc["name"] == apiname:
                 try:
                     return svc.get("credentials")
