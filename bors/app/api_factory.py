@@ -2,14 +2,13 @@
 API Core
 """
 
-from bors.app.log import LoggerMixin
 from bors.common.factory import BasicFactory
 
 from bors.api.adapter.api import ApiAdapter
 from bors.api.adapter.ws import WsAdapter
 
 
-class ApiMetaAdapter(LoggerMixin):
+class ApiMetaAdapter:
     """Adapter of adapters for all API instantiations"""
     name = "api"
 
@@ -17,12 +16,7 @@ class ApiMetaAdapter(LoggerMixin):
         self.apis = []  # type: list
         self.wsocks = []  # type: list
 
-        self.create_logger()
-
         for name, context in contexts.items():
-            self.log.debug(f"Starting API: {name}")
-            self.log.debug(f"{name}: {context}")
-
             wsock = BasicFactory(WsAdapter)
             wsock.product.interface(context)
             self.wsocks.append(wsock.product)

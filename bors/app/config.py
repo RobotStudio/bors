@@ -2,7 +2,6 @@
 
 from collections import namedtuple
 
-from bors.common.singleton import Singleton
 from bors.common.dict_merge import dict_merge
 from bors.generics.config import ConfSchema
 
@@ -20,7 +19,7 @@ DEFAULT_CONFIG = {
 }
 
 
-class AppConf(metaclass=Singleton):
+class AppConf:
     """Application-wide configuration singleton"""
     conf = None
     services_by_name = {}  # type: dict

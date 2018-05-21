@@ -2,10 +2,8 @@
 API Core
 """
 
-from bors.app.log import LoggerMixin
 
-
-class ApiProduct(LoggerMixin):
+class ApiProduct:
     """ApiAdapterFactory Product interface"""
     name = "api_product"
     thread = None
@@ -15,7 +13,6 @@ class ApiProduct(LoggerMixin):
         self.api = None
         self.context = None
         self.callback = None
-        self.create_logger()
 
     def interface(self, context):
         """Implement the interface for the adapter object"""
