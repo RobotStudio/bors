@@ -40,6 +40,7 @@ class AppBuilder(LoggerMixin):
             "cls": cls,
             "inst": [],
             "conf": self.conf.get_api(cls.name),
+            "credentials": self.conf.get_api_credentials(cls.name),
             "calls": self.conf.get_api_calls(),
             "shared": {},  # Used per-API to monitor state
             "callback": self.receive

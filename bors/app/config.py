@@ -54,7 +54,7 @@ class AppConf:
                 .copy()
 
         except AttributeError:
-            raise Exception(f"Couldn't find credentials for API: {apiname}")
+            return {}
 
     def get_api_endpoints(self, apiname):
         """Returns the API endpoints"""
