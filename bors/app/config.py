@@ -25,14 +25,18 @@ class AppConf(metaclass=Singleton):
     conf = None
     services_by_name = {}  # type: dict
 
-    def __init__(self, config=None):
+    def __init__(self, config=None, schema=None):
         # Bail if we've been loaded before
         if self.conf is not None:
             return
 
+        schema = ConfSchema() if schema is None else schema
+
         data = DEFAULT_CONFIG.copy()
+        print(f"INBOUND CONFIG: {config}")
         dict_merge(data, config)
-        self.conf = ConfSchema().load(data).data
+        self.conf = schema.load(data).data
+        print(f"BORS CONF: {self.conf}")
 
     def get_api_services_by_name(self):
         """Return a dict of services by name"""
