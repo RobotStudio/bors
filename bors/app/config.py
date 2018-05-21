@@ -45,16 +45,12 @@ class AppConf:
 
     def get_api_credentials(self, apiname):
         """Returns a Credentials object for API access"""
-        try:
-            return self.data\
-                .get("api")\
-                .get("services")\
-                .get(apiname)\
-                .get("credentials")\
-                .copy()
-
-        except AttributeError:
-            return {}
+        for svc in self.data.get("api").get("services"):
+            if svc["name"] == apiname:
+                try:
+                    return svc.get("credentials")
+                except AttributeError:
+                    return {}
 
     def get_api_endpoints(self, apiname):
         """Returns the API endpoints"""
