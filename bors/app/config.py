@@ -1,12 +1,10 @@
 """Configuration module"""
 
+import json
 from collections import namedtuple
 
 from bors.common.dict_merge import dict_merge
 from bors.generics.config import ConfSchema
-
-
-Credentials = namedtuple('Credentials', ('api', 'secret'))
 
 
 DEFAULT_CONFIG = {
@@ -22,11 +20,19 @@ DEFAULT_CONFIG = {
 class AppConf:
     """Application-wide configuration singleton"""
     conf = None
-    raw_conf = DEFAULT_CONFIG.copy()
+    raw_conf = None
     services_by_name = {}  # type: dict
 
     def __init__(self, config=None):
-        dict_merge(self.raw_conf, config)
+        global DEFAULT_CONFIG
+        self.raw_conf = DEFAULT_CONFIG.copy()
+
+        try:
+            conf = json.loads(config)
+        except ValueError:
+            conf = config
+
+        dict_merge(self.raw_conf, conf)
         self.conf = ConfSchema().load(self.raw_conf).data
 
     def get_api_services_by_name(self):
@@ -40,21 +46,13 @@ class AppConf:
     def get_api_credentials(self, apiname):
         """Returns a Credentials object for API access"""
         try:
-            return Credentials(
-                api=self.data
-                .get("api")
-                .get("services")
-                .get(apiname)
-                .get("credentials")
-                .copy(),
+            return self.data\
+                .get("api")\
+                .get("services")\
+                .get(apiname)\
+                .get("credentials")\
+                .copy()
 
-                secret=self.data
-                .get("api")
-                .get("services")
-                .get(apiname)
-                .get("credentials")
-                .copy(),
-                )
         except AttributeError:
             raise Exception(f"Couldn't find credentials for API: {apiname}")
 
