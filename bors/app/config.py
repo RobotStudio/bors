@@ -29,7 +29,7 @@ class AppConf:
 
         try:
             conf = json.loads(config)
-        except ValueError:
+        except TypeError:
             conf = config
 
         dict_merge(self.raw_conf, conf)
