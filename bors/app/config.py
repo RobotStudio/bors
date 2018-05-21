@@ -25,10 +25,6 @@ class AppConf:
     services_by_name = {}  # type: dict
 
     def __init__(self, config=None):
-        # Bail if we've been loaded before
-        if self.conf is not None:
-            return
-
         data = DEFAULT_CONFIG.copy()
         dict_merge(data, config)
         self.conf = ConfSchema().load(data).data
