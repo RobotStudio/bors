@@ -23,7 +23,6 @@ class AppConf:
     services_by_name = {}  # type: dict
 
     def __init__(self, config=None):
-        global DEFAULT_CONFIG
         self.raw_conf = DEFAULT_CONFIG.copy()
 
         try:

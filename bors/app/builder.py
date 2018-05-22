@@ -34,6 +34,7 @@ class AppBuilder(LoggerMixin):
 
     def create_api_context(self, cls):
         """Create and return an API context"""
+        print(f"""CREDS: {self.conf.get_api_credentials(cls.name)}""")
         sch = ApiContextSchema()
         return sch.load({
             "name": cls.name,
