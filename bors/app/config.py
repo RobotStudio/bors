@@ -1,7 +1,6 @@
 """Configuration module"""
 
 import json
-from collections import namedtuple
 
 from bors.common.dict_merge import dict_merge
 from bors.generics.config import ConfSchema
