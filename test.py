@@ -108,6 +108,7 @@ def main():
             "services": [
                 {
                     "name": "my_api",
+                    "testkey": "testval",
                 },
             ],
             "calls": {

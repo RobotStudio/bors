@@ -12,5 +12,9 @@ class LoggerMixin:
             name = self.name
 
         self.log = logging.getLogger(name)
-        self.log.setLevel(
-            getattr(logging, self.conf.get_log_level(), logging.INFO))
+        try:
+            lvl = self.conf.get_log_level()
+        except AttributeError:
+            lvl = self.context.get("log_level", None)
+
+        self.log.setLevel(getattr(logging, lvl, logging.INFO))

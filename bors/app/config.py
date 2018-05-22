@@ -18,6 +18,7 @@ DEFAULT_CONFIG = {
 
 class AppConf:
     """Application-wide configuration singleton"""
+    schema = ConfSchema
     conf = None
     raw_conf = None
     services_by_name = {}  # type: dict
@@ -31,14 +32,14 @@ class AppConf:
             conf = config
 
         dict_merge(self.raw_conf, conf)
-        self.conf = ConfSchema().load(self.raw_conf).data
+        self.conf = self.schema().load(self.raw_conf).data
 
     def get_api_services_by_name(self):
         """Return a dict of services by name"""
         if not self.services_by_name:
-            self.services_by_name = {s.get('name'): s for s in self.conf
-                                     .get("api")
-                                     .get("services")}
+            self.services_by_name = dict({s.get('name'): s for s in self.conf
+                                          .get("api")
+                                          .get("services")})
         return self.services_by_name
 
     def get_api_credentials(self, apiname):
@@ -84,10 +85,16 @@ class AppConf:
                 return self.conf.get("api").copy()
             except:  # NOQA
                 raise Exception(f"Couldn't find the API configuration")
+
+    def get_api_service(self, name=None):
+        """Returns the specific service config definition"""
         try:
-            return self.services_by_name.get(name).copy()
+            svc = self.services_by_name.get(name, None)
+            if svc is None:
+                raise ValueError(f"Couldn't find the API service configuration")
+            return svc
         except:  # NOQA
-            raise Exception(f"Couldn't find the API configuration")
+            raise Exception(f"Failed to retrieve the API service configuration")
 
     def get_log_level(self):
         """Returns the configured log level"""

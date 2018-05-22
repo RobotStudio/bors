@@ -52,7 +52,7 @@ class ApiAdapter(ApiProduct):
         if action is not None:
             if hasattr(self.api, "log"):
                 self.api.log.debug(
-                    f"Using API's override for /{callname}: /{action}")
+                f"Using API's override for /{callname}: /{action}")
 
         # Define a mock method if one doesn't exist
         def mthd(args=None):
