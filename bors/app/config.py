@@ -1,13 +1,9 @@
 """Configuration module"""
 
-from collections import namedtuple
+import json
 
-from bors.common.singleton import Singleton
 from bors.common.dict_merge import dict_merge
 from bors.generics.config import ConfSchema
-
-
-Credentials = namedtuple('Credentials', ('api', 'secret'))
 
 
 DEFAULT_CONFIG = {
@@ -20,23 +16,23 @@ DEFAULT_CONFIG = {
 }
 
 
-class AppConf(metaclass=Singleton):
+class AppConf:
     """Application-wide configuration singleton"""
     conf = None
+    raw_conf = None
     services_by_name = {}  # type: dict
 
-    def __init__(self, config=None, schema=None):
-        # Bail if we've been loaded before
-        if self.conf is not None:
-            return
+    def __init__(self, config=None):
+        global DEFAULT_CONFIG
+        self.raw_conf = DEFAULT_CONFIG.copy()
 
-        schema = ConfSchema() if schema is None else schema
+        try:
+            conf = json.loads(config)
+        except TypeError:
+            conf = config
 
-        data = DEFAULT_CONFIG.copy()
-        print(f"INBOUND CONFIG: {config}")
-        dict_merge(data, config)
-        self.conf = schema.load(data).data
-        print(f"BORS CONF: {self.conf}")
+        dict_merge(self.raw_conf, conf)
+        self.conf = ConfSchema().load(self.raw_conf).data
 
     def get_api_services_by_name(self):
         """Return a dict of services by name"""
@@ -48,26 +44,12 @@ class AppConf(metaclass=Singleton):
 
     def get_api_credentials(self, apiname):
         """Returns a Credentials object for API access"""
-        try:
-            return Credentials(
-                api=self.data
-                .get("api")
-                .get("services")
-                .get(apiname)
-                .get("credentials")
-                .get("apikey")
-                .copy(),
-
-                secret=self.data
-                .get("api")
-                .get("services")
-                .get(apiname)
-                .get("credentials")
-                .get("secret")
-                .copy(),
-                )
-        except AttributeError:
-            raise Exception(f"Couldn't find credentials for API: {apiname}")
+        for svc in self.conf.get("api").get("services"):
+            if svc["name"] == apiname:
+                try:
+                    return svc.get("credentials")
+                except AttributeError:
+                    return {}
 
     def get_api_endpoints(self, apiname):
         """Returns the API endpoints"""

@@ -40,7 +40,7 @@ class Strategy:
             ware.postshutdown()
 
 
-class IStrategy(abc.ABC, LoggerMixin):
+class IStrategy(abc.ABC):
     """
     Declare an interface common to all supported strategies. Context
     uses this interface to call the strategies.
