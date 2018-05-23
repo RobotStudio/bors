@@ -2,8 +2,10 @@
 
 from marshmallow import Schema, fields, post_load
 
+from bors.common.dotobj import DotObj
 
-class Conf:
+
+class Conf(DotObj):
     """Loads a sane configuration"""
     def __init__(self, **config):
         self.conf = config
