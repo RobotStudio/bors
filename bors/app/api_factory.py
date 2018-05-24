@@ -5,7 +5,7 @@ API Core
 from bors.common.factory import BasicFactory
 
 from bors.api.adapter.api import ApiAdapter
-from bors.api.adapter.ws import WsAdapter
+from bors.api.adapter.socketcluster import SCAdapter
 
 
 class ApiMetaAdapter:
@@ -17,7 +17,7 @@ class ApiMetaAdapter:
         self.wsocks = []  # type: list
 
         for name, context in contexts.items():
-            wsock = BasicFactory(WsAdapter)
+            wsock = BasicFactory(SCAdapter)
             wsock.product.interface(context)
             self.wsocks.append(wsock.product)
 
