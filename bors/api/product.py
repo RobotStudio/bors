@@ -2,17 +2,18 @@
 API Core
 """
 
+from multiprocessing import Event
+
 
 class ApiProduct:
     """ApiAdapterFactory Product interface"""
-    name = "api_product"
-    thread = None
-    keep_going = True
+    api = None
+    context = None
+    callback = None
 
-    def __init__(self):
-        self.api = None
-        self.context = None
-        self.callback = None
+    thread = {}  # type: dict
+    keep_going = True
+    stopped = Event()
 
     def interface(self, context):
         """Implement the interface for the adapter object"""
@@ -21,6 +22,10 @@ class ApiProduct:
 
     def shutdown(self):
         """Executed on shutdown of application"""
-        self.keep_going = False
+        self.stopped.set()
+
         if hasattr(self.api, "shutdown"):
             self.api.shutdown()
+
+        for thread in self.thread.values():
+            thread.join()
