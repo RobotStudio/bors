@@ -7,6 +7,11 @@ from multiprocessing import Process
 from bors.api.product import ApiProduct  # pylint: disable=E0611,E0401
 
 
+def call_args(call, args=None):
+    """If args are none, don't pass them"""
+    return [call] if args is None else [call, args]
+
+
 class ApiAdapter(ApiProduct):
     """Adapter for any API implementations"""
     is_connected_ws = False
@@ -40,9 +45,10 @@ class ApiAdapter(ApiProduct):
             request = self._generate_request(action, arguments)
             if action is None:
                 return self._generate_result(
-                    callname, self.api.call(callname, arguments))
+                    callname, self.api.call(*call_args(callname, arguments)))
             return self._generate_result(
-                callname, self.api.call(action, arguments))
+                callname, self.api.call(*call_args(action, arguments)))
+
         request = self._generate_request(callname, arguments)
         return self._generate_result(callname, action(request))
 
