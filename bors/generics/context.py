@@ -12,8 +12,8 @@ class ApiContextSchema(Schema):
     name = fields.Str(required=True)  # Name of the API
     conf = fields.Nested(ApiServiceConfSchema())  # API's config
     calls = fields.Dict()  # API calls list
-    currencies = fields.List(fields.Str())  # List of currencies to monitor
     shared = fields.Dict()  # API-level shared information
+    log_level = fields.Str()  # Log level
     callback = fields.Function()  # Callback to drop a result on the pipeline
     lock = Lock()
 
@@ -27,6 +27,7 @@ class StrategyContextSchema(Schema):
     """Context to share information among Strategies"""
     api_contexts = fields.Dict()
     api_context = fields.Nested(ApiContextSchema())
+    log_level = fields.Str()  # Log level
 
     class Meta:
         """Strategy Context metaparameters"""
