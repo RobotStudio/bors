@@ -1,13 +1,9 @@
 """Configuration module"""
 
-from collections import namedtuple
+import json
 
-from bors.common.singleton import Singleton
 from bors.common.dict_merge import dict_merge
 from bors.generics.config import ConfSchema
-
-
-Credentials = namedtuple('Credentials', ('api', 'secret'))
 
 
 DEFAULT_CONFIG = {
@@ -20,50 +16,35 @@ DEFAULT_CONFIG = {
 }
 
 
-class AppConf(metaclass=Singleton):
+class AppConf:
     """Application-wide configuration singleton"""
+    schema = ConfSchema
     conf = None
+    raw_conf = None
     services_by_name = {}  # type: dict
 
     def __init__(self, config=None):
-        # Bail if we've been loaded before
-        if self.conf is not None:
-            return
+        self.raw_conf = DEFAULT_CONFIG.copy()
 
-        data = DEFAULT_CONFIG.copy()
-        dict_merge(data, config)
-        self.conf = ConfSchema().load(data).data
+        try:
+            conf = json.loads(config)
+        except TypeError:
+            conf = config
+
+        dict_merge(self.raw_conf, conf)
+        self.conf = self.schema().load(self.raw_conf).data
 
     def get_api_services_by_name(self):
         """Return a dict of services by name"""
         if not self.services_by_name:
-            self.services_by_name = {s.get('name'): s for s in self.conf
-                                     .get("api")
-                                     .get("services")}
+            self.services_by_name = dict({s.get('name'): s for s in self.conf
+                                          .get("api")
+                                          .get("services")})
         return self.services_by_name
 
     def get_api_credentials(self, apiname):
         """Returns a Credentials object for API access"""
-        try:
-            return Credentials(
-                api=self.data
-                .get("api")
-                .get("services")
-                .get(apiname)
-                .get("credentials")
-                .get("apikey")
-                .copy(),
-
-                secret=self.data
-                .get("api")
-                .get("services")
-                .get(apiname)
-                .get("credentials")
-                .get("secret")
-                .copy(),
-                )
-        except AttributeError:
-            raise Exception(f"Couldn't find credentials for API: {apiname}")
+        return self.get_api_service(apiname).get("credentials", None)
 
     def get_api_endpoints(self, apiname):
         """Returns the API endpoints"""
@@ -99,10 +80,16 @@ class AppConf(metaclass=Singleton):
                 return self.conf.get("api").copy()
             except:  # NOQA
                 raise Exception(f"Couldn't find the API configuration")
+
+    def get_api_service(self, name=None):
+        """Returns the specific service config definition"""
         try:
-            return self.services_by_name.get(name).copy()
+            svc = self.services_by_name.get(name, None)
+            if svc is None:
+                raise ValueError(f"Couldn't find the API service configuration")
+            return svc
         except:  # NOQA
-            raise Exception(f"Couldn't find the API configuration")
+            raise Exception(f"Failed to retrieve the API service configuration")
 
     def get_log_level(self):
         """Returns the configured log level"""

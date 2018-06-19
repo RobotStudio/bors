@@ -87,16 +87,11 @@ class SockMixin:
 
 class SockChannel(LoggerMixin):
     """Channel object"""
-    name = 'channel'  # For logging
-
     def __init__(self, channel, response_type, callback):
-        self.create_logger()
         self.sock = None
         self.channel = channel
         self.response_type = response_type
         self.callback = callback
-
-        self.log.debug(f"Creating channel: {self.channel}")
 
     def connect(self, sock):
         """Attach a given socket to a channel"""
@@ -107,4 +102,3 @@ class SockChannel(LoggerMixin):
         self.sock = sock
         self.sock.subscribe(self.channel)
         self.sock.onchannel(self.channel, cbwrap)
-        self.log.debug(f"Listening on channel: {self.channel}")

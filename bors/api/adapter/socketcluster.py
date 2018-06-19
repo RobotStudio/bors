@@ -8,8 +8,8 @@ from bors.api.product import ApiProduct  # pylint: disable=E0611,E0401
 from bors.api.websock import SockChannel  # pylint: disable=E0611,E0401
 
 
-class WsAdapter(ApiProduct):
-    """Adapter for WebSockets"""
+class SCAdapter(ApiProduct):
+    """Adapter for SocketCluster"""
     is_connected_ws = None
     api = None
     thread = None
