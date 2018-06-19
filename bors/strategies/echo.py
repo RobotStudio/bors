@@ -2,8 +2,8 @@
 Simple echo strategy to output an "ECHO"
 """
 
-from app.strategy import IStrategy
-from algorithms.echo import echo
+from bors.app.strategy import IStrategy
+from bors.algorithms.echo import echo
 
 
 class Echo(IStrategy):
