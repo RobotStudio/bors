@@ -1,0 +1,9 @@
+pytest
+tox
+coverage
+pytest-cov
+pip
+wheel
+pandoc
+flake8
+Sphinx
