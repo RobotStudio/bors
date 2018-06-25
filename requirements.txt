@@ -4,7 +4,7 @@ coloredlogs==10.0
 humanfriendly==4.12.1
 idna==2.7
 int-date==0.1.8
-marshmallow==2.15.0
+marshmallow==2.15.3
 python-dateutil==2.6.1
 pytz==2017.3
 requests==2.18.4
