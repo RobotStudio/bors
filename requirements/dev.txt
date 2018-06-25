@@ -7,3 +7,7 @@ wheel
 pandoc
 flake8
 Sphinx
+bumpversion
+watchdog
+cryptography
+PyYAML
