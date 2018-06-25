@@ -1,31 +1,15 @@
-# Config file for automatic testing at travis-ci.org
-# This file will be regenerated if you run travis_pypi_setup.py
-
 language: python
-
-env:
-  - TOXENV=py35
-  - TOXENV=py34
-  - TOXENV=py33
-  - TOXENV=py27
-  - TOXENV=py26
-  - TOXENV=pypy
-
-# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
-install: pip install -U tox
-
-# command to run tests, e.g. python setup.py test
+python:
+- 3.6
+install: pip install -U tox-travis
 script: tox
-
-# After you create the Github repo and add it to Travis, run the
-# travis_pypi_setup.py script to finish PyPI deployment setup
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
   user: karma0
   password:
-    secure: PLEASE_REPLACE_ME
+    secure: dRiKpUu6Sn0Yb7NJyrbE+8wMagDe11CEzXQRb5mPRenDOmgHGvbYLigoLiyioy3Id2Bm77WPkTiQEdJXSuBW2HwE69XKE7fKTEd7iOhfRy/yR73vyPW9Oa/oKQmsgbh2clqxaaFrzpsl/7JcNfbxr2Jd2LjDLzDIzJP3ToChkvcGaw95hD1wFH/54UVdkUxhjVTh/zKyCO6D7bYRdSES+ublljji7EBlUPCuaMRxo3gQkNlqRIccOW4LrPH5pzf4be03ORCkQ629j+OWw5q3MHd3JFTtAgzZothNDVgtTTclX80aLySh+LlcjwAOePJzZGeZzznLfZxfw7k6wgiGOeBeejGiiGyiTQ5I+2wS1mRsBdzq2N6IhJuSSgD2AuqlYoAK9+y+fYwUnpXYrtOW3tv3i4Vl62xvNyinE/EmgTrdF36EaeykNlPzKpLX03z7d/m2Ym26N4RR8huOkqQo9QUApPKJnRoH8Ymy05RL2cIC66s4L5kRCUgF4QlH7yCynuuwgmtP5eHuyv4rAUMD5ol/borSTAkaEbaD0lk0tpO4rB6M87/i2UK4B2ZnfNlH77xXlsQgTlXVU8ybBztljSwrUypSn1P9NKTNkwGveJ6+yhglAsO8lUO9q0Mns5BNFallFS62GCyhd2N/p3BURwUKZNLi9G6BxFDsk+CrSiM=
   on:
     tags: true
-    repo: karma0/bors
-    condition: $TOXENV == py27
+    repo: RobotStudio/bors
+    python: 3.6
