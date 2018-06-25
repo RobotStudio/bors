@@ -40,7 +40,7 @@ setup(
     package_dir={'bors': 'bors'},
     include_package_data=True,
     install_requires=requirements,
-    license="GPL",
+    license="GNU General Public License v3",
     zip_safe=False,
     keywords='web-scraper api-integrator scraping scraper data-integration '
              'data-ingestion bors',
