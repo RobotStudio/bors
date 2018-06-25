@@ -1,37 +1,57 @@
-"""Setup script to package project"""
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-import os
-from setuptools import setup
+"""The setup script"""
 
+from setuptools import setup, find_packages
 
-HERE = os.path.abspath(os.path.dirname(__file__))
-README = open(os.path.join(HERE, 'README.md')).read()
+with open('README.rst') as readme_file:
+    readme = readme_file.read()
 
-VERSION = '0.2.0'
+with open('HISTORY.rst') as history_file:
+    history = history_file.read().replace('.. :changelog:', '')
+
+requirements = [
+    'dataclasses',
+    'marshmallow',
+    'requests',
+    'urllib3',
+]
+
+test_requirements = [
+    'pytest',
+    'tox',
+    'coverage',
+    'pytest-cov',
+]
+
+setup_requirements = ['pytest-runner', ]
 
 
 setup(
     name='bors',
-    packages=[
-        'bors',
-        'bors.api',
-        'bors.api.adapter',
-        'bors.app',
-        'bors.common',
-        'bors.generics',
-        'bors.strategies',
-        'bors.algorithms',
-    ],
-    version=VERSION,
-    description="A highly flexible and extensible service integration "
-    "framework for scraping the web or consuming APIs.",
-    long_description=README,
-    classifiers=[],
-    keywords="web-scraper api-integrator scraping scraper data-integration"
-    "data-ingestion",
-    author='Bobby',
-    author_email='karma0@gmail.com',
+    version='0.2.0',
+    description="A highly flexible and extensible service integration framework for scraping the web or consuming APIs",
+    long_description=readme + '\n\n' + history,
+    author="Bobby",
+    author_email='bobby@robot.studio',
     url='https://github.com/RobotStudio/bors',
-    license='GPL',
-    install_requires=['marshmallow', 'requests', 'socketclusterclient'],
+    packages=find_packages(exclude=['tests', 'docs']),
+    package_dir={'bors': 'bors'},
+    include_package_data=True,
+    install_requires=requirements,
+    license="GPL",
+    zip_safe=False,
+    keywords='web-scraper api-integrator scraping scraper data-integration '
+             'data-ingestion bors',
+
+    classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+        'Natural Language :: English',
+        'Programming Language :: Python :: 3.6',
+    ],
+    test_suite='tests',
+    tests_require=test_requirements
 )
