@@ -7,4 +7,4 @@ bumpversion
 watchdog
 cryptography
 PyYAML
-coloredlogs
+coloredlogs==10.0
