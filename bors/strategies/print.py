@@ -17,15 +17,3 @@ class Print(IStrategy):
 
         # just a pass-through
         return context
-
-
-class PrintResult(IStrategy):
-    """Print Strategy implementation"""
-    def bind(self, context):
-        """
-        Bind the strategy to the middleware pipeline,
-        returning the context
-        """
-
-        # just a pass-through
-        return context

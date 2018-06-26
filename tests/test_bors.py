@@ -10,7 +10,7 @@ Tests for `bors` module.
 
 import unittest
 
-from bors import Bors
+#from bors import Bors
 
 
 class TestBors(unittest.TestCase):
