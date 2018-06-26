@@ -1,5 +1,5 @@
 -r prod.txt
 pytest
 tox
-coverage
+coverage==4.5.1
 pytest-cov
