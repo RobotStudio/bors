@@ -1,8 +1,4 @@
-pytest
-tox
-coverage
-pytest-cov
-pip
+-r test.txt
 wheel
 pandoc
 flake8
@@ -11,3 +7,4 @@ bumpversion
 watchdog
 cryptography
 PyYAML
+coloredlogs
