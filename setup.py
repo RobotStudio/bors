@@ -30,7 +30,7 @@ setup_requirements = ['pytest-runner', ]
 
 setup(
     name='bors',
-    version='0.3.0',
+    version='0.3.1',
     description="A highly flexible and extensible service integration framework for scraping the web or consuming APIs",
     long_description=readme + '\n\n' + history,
     author="Bobby",
@@ -40,7 +40,7 @@ setup(
     package_dir={'bors': 'bors'},
     include_package_data=True,
     install_requires=requirements,
-    license="GPL",
+    license="GNU General Public License v3",
     zip_safe=False,
     keywords='web-scraper api-integrator scraping scraper data-integration '
              'data-ingestion bors',
