@@ -1,6 +1,6 @@
 -r test.txt
 wheel
-pandoc
+pandoc==1.0.2
 flake8
 Sphinx
 bumpversion
