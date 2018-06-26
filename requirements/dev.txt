@@ -6,5 +6,5 @@ Sphinx
 bumpversion
 watchdog
 cryptography
-PyYAML
+PyYAML==3.12
 coloredlogs
