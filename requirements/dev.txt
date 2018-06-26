@@ -3,7 +3,7 @@ wheel
 pandoc
 flake8
 Sphinx
-bumpversion
+bumpversion==0.5.3
 watchdog
 cryptography
 PyYAML
