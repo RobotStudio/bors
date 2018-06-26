@@ -13,6 +13,7 @@
     :target: https://pyup.io/repos/github/RobotStudio/bors/
     :alt: Python 3
 
+
 Bors
 ====
 
@@ -206,7 +207,7 @@ middleware and passed directly to an API, allowing easily for
 request/response type behavior in addition to observe and react.
 
 Ingesting Data
-~~~~~~~~~~~~~~
+--------------
 
 ::
 
@@ -228,7 +229,7 @@ Ingesting Data
 Ingested data provokes calls along the pipeline.
 
 Outgoing Data
-~~~~~~~~~~~~~
+-------------
 
 ::
 
