@@ -1,5 +1,5 @@
 -r prod.txt
-pytest
+pytest==3.6.2
 tox
 coverage
 pytest-cov
