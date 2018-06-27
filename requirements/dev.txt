@@ -5,5 +5,5 @@ flake8
 Sphinx
 watchdog
 cryptography
-PyYAML
+PyYAML==4.1
 coloredlogs
