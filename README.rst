@@ -1,3 +1,19 @@
+.. image:: https://travis-ci.org/RobotStudio/bors.svg?branch=master
+    :target: https://travis-ci.org/RobotStudio/bors
+
+.. image:: https://readthedocs.org/projects/bors/badge/?version=latest
+    :target: https://bors.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+
+.. image:: https://pyup.io/repos/github/RobotStudio/bors/shield.svg
+    :target: https://pyup.io/repos/github/RobotStudio/bors/
+    :alt: Updates
+
+.. image:: https://pyup.io/repos/github/RobotStudio/bors/python-3-shield.svg
+    :target: https://pyup.io/repos/github/RobotStudio/bors/
+    :alt: Python 3
+
+
 Bors
 ====
 
@@ -191,7 +207,7 @@ middleware and passed directly to an API, allowing easily for
 request/response type behavior in addition to observe and react.
 
 Ingesting Data
-~~~~~~~~~~~~~~
+--------------
 
 ::
 
@@ -213,7 +229,7 @@ Ingesting Data
 Ingested data provokes calls along the pipeline.
 
 Outgoing Data
-~~~~~~~~~~~~~
+-------------
 
 ::
 

@@ -30,7 +30,7 @@ setup_requirements = ['pytest-runner', ]
 
 setup(
     name='bors',
-    version='0.3.4',
+    version='0.3.5',
     description="A highly flexible and extensible service integration framework for scraping the web or consuming APIs",
     long_description=readme + '\n\n' + history,
     author="Bobby",
