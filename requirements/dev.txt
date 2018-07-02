@@ -1,6 +1,6 @@
 -r test.txt
 wheel==0.31.1
-flake8
+flake8==3.5.0
 Sphinx
 watchdog
 cryptography
