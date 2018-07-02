@@ -1,6 +1,5 @@
 -r test.txt
 wheel==0.31.1
-pandoc
 flake8==3.5.0
 Sphinx
 watchdog
