@@ -3,6 +3,12 @@
 History
 -------
 
+0.3.5 (2018-06-26)
+---------------------
+
+* Added badges.
+* Cleaned up deps.
+
 0.3.4 (2018-06-26)
 ---------------------
 
@@ -26,7 +32,7 @@ History
 0.3.0 (2018-06-25)
 ---------------------
 
-* Reboot packaging using cookiecutter-pypackage
+* Reboot packaging using cookiecutter-pypackage.
 
 0.2.0 (2018-05-17)
 ---------------------
