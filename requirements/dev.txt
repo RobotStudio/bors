@@ -1,5 +1,5 @@
 -r test.txt
-wheel
+wheel==0.31.1
 pandoc
 flake8
 Sphinx
