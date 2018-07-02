@@ -1,9 +1,9 @@
 -r test.txt
-wheel
-pandoc
-flake8
-Sphinx
-watchdog
-cryptography
-PyYAML
+PyYAML==3.12
+cryptography==2.2.2
+watchdog==0.8.3
+Sphinx==1.7.5
+wheel==0.31.1
+flake8==3.5.0
+PyYAML==4.1
 coloredlogs
