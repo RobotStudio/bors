@@ -1,6 +1,6 @@
 -r test.txt
 coloredlogs==10.0
-cryptography==2.2.2
+cryptography==2.3.1
 watchdog==0.8.3
 Sphinx==1.7.6
 wheel==0.31.1
