@@ -3,6 +3,6 @@ coloredlogs==10.0
 cryptography==2.3.1
 watchdog==0.8.3
 Sphinx==1.7.7
-wheel==0.31.1
+wheel==0.32.1
 flake8==3.5.0
 PyYAML==4.1
