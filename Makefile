@@ -25,7 +25,7 @@ help:
 	@echo "dist - package"
 	@echo "install - install the package to the active Python's site-packages"
 
-clean: clean-build clean-pyc clean-test
+clean: clean-build clean-pyc clean-test clean-dev
 
 clean-build:
 	rm -fr build/
@@ -44,6 +44,10 @@ clean-test:
 	rm -fr .tox/
 	rm -f .coverage
 	rm -fr htmlcov/
+
+clean-dev:
+	rm -fr .mypy_cache/
+	find . -name '*.py@neomake*.py' -exec rm -fr {} +
 
 lint:
 	flake8 bors tests
