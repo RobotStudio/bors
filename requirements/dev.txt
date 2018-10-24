@@ -4,5 +4,5 @@ cryptography==2.3.1
 watchdog==0.9.0
 Sphinx==1.8.1
 wheel==0.32.2
-flake8==3.5.0
+flake8==3.6.0
 PyYAML==4.1
