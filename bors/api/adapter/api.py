@@ -33,6 +33,12 @@ class ApiAdapter(ApiProduct):
 
     def call(self, callname, arguments=None):
         """Executed on each scheduled iteration"""
+        # Dynamically assigned for flexibility in implementations
+        self.generate_result = getattr(self.api, "generate_result",
+            self._generate_result)
+        self.generate_request = getattr(self.api, "generate_request",
+            self._generate_request)
+
         # See if a method override exists
         action = getattr(self.api, callname, None)
         if action is None:
@@ -42,15 +48,15 @@ class ApiAdapter(ApiProduct):
                 action = callname
 
         if not callable(action):
-            request = self._generate_request(action, arguments)
+            request = self.generate_request(action, arguments)
             if action is None:
-                return self._generate_result(
-                    callname, self.api.call(*call_args(callname, arguments)))
-            return self._generate_result(
-                callname, self.api.call(*call_args(action, arguments)))
-
-        request = self._generate_request(callname, arguments)
-        return self._generate_result(callname, action(request))
+                self.api.call(*call_args(callname, arguments))
+            else:
+                self.api.call(*call_args(action, arguments))
+        else:
+            request = self.generate_request(callname, arguments)
+            #self.generate_result(callname, action(request))
+            action(request)
 
     def _generate_request(self, callname, request):
         """Generate a request object for delivery to the API"""
