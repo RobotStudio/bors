@@ -6,6 +6,10 @@ import sys
 import click
 
 
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+TEMPLATES_PATH = os.path.join(ROOT_DIR, 'templates')
+
+
 @click.group()
 @click.option('-V', '--version', is_flag=True, help='Display version and exit')
 def main(version):
@@ -18,12 +22,16 @@ def main(version):
 
 @main.group()
 def generate():
-    click.echo(os.path.dirname(os.path.abspath(__file__)))
+    """Generate a new project for use with ``bors``."""
+    pass
 
 
 @generate.command()
+@click.argument('APIName', help='The name of the API to integrate with.')
 def api():
+    """Generate stubs for interacting with an API"""
     click.echo("Generating an API")
+
     return 0
 
 if __name__ == "__main__":
