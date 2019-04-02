@@ -3,4 +3,5 @@
 """Primary application interface."""
 
 class Bors:
-    pass
+    def execute(self):
+        pass

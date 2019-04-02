@@ -5,6 +5,8 @@ import os
 import sys
 import click
 
+from bors.bors import Bors
+
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATES_PATH = os.path.join(ROOT_DIR, 'templates')
@@ -18,6 +20,17 @@ def main(version):
     if version:
         click.echo(__version__)
     return 0
+
+
+@main.group()
+def run():
+    """Execute the bors framework"""
+    try:
+        bors = Bors()
+        bors.execute()
+    except KeyboardInterrupt:
+        click.echo("Shutting down...")
+        bors.shutdown()
 
 
 @main.group()
