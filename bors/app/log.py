@@ -1,5 +1,15 @@
 """Log Util"""
 
+import os
 import logging
-logger = logging.getLogger('bors')
-logger.setLevel(logging.INFO)
+
+
+def getlogger():
+    """Create a global logger instance"""
+    logger = logging.getLogger(__name__)
+    level = getattr(logging, os.environ.get('BORS_LOGLEVEL', 'INFO'))
+    logger.setLevel(level)
+    return logger
+
+
+logger = getlogger()  # NOQA
