@@ -3,4 +3,5 @@
 from bors.app.config.base import AppConfig
 
 
-settings = AppConfig()
+CONFIG = AppConfig()
+settings = CONFIG.settings  # NOQA

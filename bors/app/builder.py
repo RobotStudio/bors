@@ -2,17 +2,17 @@
 Build the context and pipeline; manage the API
 """
 from bors.app.api_factory import ApiMetaAdapter
+from bors.app.config import settings
 from bors.app import logger
 
 
 class AppBuilder:
     """Class that assembles and runs the application"""
-    def __init__(self, api_classes, strategy, app_config):
-        self.conf = app_config
+    def __init__(self, api_classes, strategy):
         self.api_contexts = {}  # type: dict
         self.exit = False
 
-        for api in self.conf.get_api_services_by_name().keys():
+        for api in settings.get_api_services_by_name().keys():
             logger.debug(f"Found configured service: {api}")
             # Only build out APIs that have interfaces AND configurations
             for api_cls in api_classes:
@@ -32,10 +32,10 @@ class AppBuilder:
             "name": cls.name,
             "cls": cls,
             "inst": [],
-            "conf": self.conf.get_api_service(cls.name),
-            "calls": self.conf.get_api_calls(),
+            "conf": settings.get_api_service(cls.name),
+            "calls": self.settings.get_api_calls(),
             "shared": {},  # Used per-API to monitor state
-            "log_level": self.conf.get_log_level(),
+            "log_level": self.settings.get_log_level(),
             "callback": self.receive
         }
 

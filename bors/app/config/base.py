@@ -1,36 +1,24 @@
 """Configuration module"""
 
+import os
 import json
+import importlib
 
-from bors.common.dict_merge import dict_merge
-
-
-DEFAULT_CONFIG = {
-    "api": {
-        "ratelimit": 1,
-        "services": [],  # API services to interact with
-        "calls": {},  # Calls made to the given API
-    },
-    "log_level": "INFO",
-}
+from bors.config import default_settings
 
 
-class AppConfig:
-    """Application-wide configuration singleton"""
-    conf = None
-    raw_conf = None
-    services_by_name = {}  # type: dict
+class Settings:
+    """Application settings"""
+    def __init__(self, settings_module):
+        self.module = importlib.import_module(settings_module)
 
-    def __init__(self, config=None):
-        self.raw_conf = DEFAULT_CONFIG.copy()
+        self.configure(default_settings)
+        self.configure(self.module)
 
-        try:
-            conf = json.loads(config)
-        except TypeError:
-            conf = config
-
-        dict_merge(self.raw_conf, conf)
-        self.conf = self.raw_conf
+    def configure(self, settings):
+        for setting in dir(settings):
+            if setting.isupper():
+                setattr(self, setting, getattr(settings, setting))
 
     def get_api_services_by_name(self):
         """Return a dict of services by name"""
@@ -92,3 +80,17 @@ class AppConfig:
     def get_log_level(self):
         """Returns the configured log level"""
         return self.conf.get("log_level", "INFO")
+
+
+class AppConfig:
+    """Application-wide configuration singleton"""
+    services_by_name = {}  # type: dict
+
+    def __init__(self, config=None):
+        settings_module = os.environ.get('BORS_SETTINGS_MODULE')
+        if not settings_module:
+            raise ValueError('Unconfigured instance. Please use '
+                             '`BORS_SETTINGS_MODULE` to specify the '
+                             'configuration for your project.')
+
+        self.settings = Settings(default_settings)
