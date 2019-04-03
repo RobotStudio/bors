@@ -6,8 +6,6 @@ clients that use it.
 
 import abc
 
-from bors.app.log import LoggerMixin
-
 
 class Strategy:
     """

@@ -2,21 +2,13 @@
 
 """Used to validate that thing work as expected"""
 
-from marshmallow import Schema, fields, post_load
-
 from bors.app.strategy import IStrategy
-from bors.app.config import AppConf
+from bors.app.config import AppConfig
 from bors.app.builder import AppBuilder
 from bors.app.strategy import Strategy
 
 from bors.algorithms.echo import echo
 from bors.common.dotobj import DotObj
-
-
-class MockItemSchema(Schema):
-    """Mock item"""
-    test = fields.Str(required=True)
-    call = fields.Str(required=True)
 
 
 class Print(IStrategy):
@@ -49,41 +41,6 @@ class Result(DotObj):
         super().__init__(**kwargs)
 
 
-class RequestSchema(Schema):
-    """Schema defining the data structure the API can be called with"""
-    callname = fields.Str(required=True)
-    payload = fields.Dict()
-
-    @post_load
-    def make_request(self, data):
-        """Parse the outgoing schema"""
-        sch = MockItemSchema()
-        return Request(**{
-            "callname": self.context.get("callname"),
-            "payload": sch.dump(data),
-        })
-
-    class Meta:
-        """Strict"""
-        strict = True
-
-
-class ResponseSchema(Schema):
-    """Schema defining the data structure the API can be called with"""
-    @post_load
-    def populate_data(self, data):
-        """Parse the outgoing schema"""
-        sch = MockItemSchema()
-        return Result(**{
-            "callname": self.context.get("callname"),
-            "result": sch.dump(data),
-        })
-
-    class Meta:
-        """Strict"""
-        strict = True
-
-
 class MyAPI:
     """
     Mock API (doesn't do anything, but drop a message on the pipeline upon
@@ -92,8 +49,8 @@ class MyAPI:
     name = "my_api"
 
     def __init__(self, context):
-        self.request_schema = RequestSchema
-        self.result_schema = ResponseSchema
+        self.request = Request
+        self.result = Result
         self.context = context
 
     def call(self, callname, data=None, **args):
@@ -128,7 +85,7 @@ def main():
             }
         }
     }
-    app = AppBuilder([MyAPI], Strategy(Print()), AppConf(config))
+    app = AppBuilder([MyAPI], Strategy(Print()), AppConfig(config))
     app.run()
 
 

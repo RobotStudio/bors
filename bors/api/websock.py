@@ -2,7 +2,7 @@
 
 from socketclusterclient import Socketcluster
 
-from bors.app.log import LoggerMixin
+from bors.app import logger
 
 
 class SockMixin:
@@ -44,16 +44,16 @@ class SockMixin:
 
     def connect_channels(self, channels):
         """Connect the provided channels"""
-        self.log.info(f"Connecting to channels...")
+        logger.info(f"Connecting to channels...")
         for chan in channels:
             chan.connect(self.sock)
-            self.log.info(f"\t{chan.channel}")
+            logger.info(f"\t{chan.channel}")
 
     # Internal initialization callbacks...
 
     def _on_set_auth(self, sock, token):
         """Set Auth request received from websocket"""
-        self.log.info(f"Token received: {token}")
+        logger.info(f"Token received: {token}")
         sock.setAuthtoken(token)
 
     def _on_auth(self, sock, authenticated):  # pylint: disable=unused-argument
@@ -61,7 +61,7 @@ class SockMixin:
         def ack(eventname, error, data):  # pylint: disable=unused-argument
             """Ack"""
             if error:
-                self.log.error(f"""OnAuth: {error}""")
+                logger.error(f"""OnAuth: {error}""")
             else:
                 self.connect_channels(self.channels)
                 self.post_conn_cb()
@@ -70,22 +70,22 @@ class SockMixin:
 
     def _on_connect(self, sock):  # pylint: disable=unused-argument
         """Message received from websocket"""
-        self.log.info(f"Connected to websocket {self.wsendpoint}")
+        logger.info(f"Connected to websocket {self.wsendpoint}")
 
     def _on_connect_error(self, sock, err):  # pylint: disable=unused-argument
         """Error received from websocket"""
         if isinstance(err, SystemExit):
-            self.log.error(f"Shutting down websocket connection")
+            logger.error(f"Shutting down websocket connection")
         else:
-            self.log.error(f"Websocket error: {err}")
+            logger.error(f"Websocket error: {err}")
 
     def _on_connect_close(self, sock):  # pylint: disable=unused-argument
         """Close received from websocket"""
-        self.log.info(f"Received close; shut down websocket \
+        logger.info(f"Received close; shut down websocket \
                       {self.wsendpoint}")
 
 
-class SockChannel(LoggerMixin):
+class SockChannel:
     """Channel object"""
     def __init__(self, channel, response_type, callback):
         self.sock = None

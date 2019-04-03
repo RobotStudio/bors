@@ -3,6 +3,7 @@
 import requests
 
 from bors.common.singleton import Singleton
+from bors.app import logger
 
 
 class Req(metaclass=Singleton):
@@ -35,13 +36,13 @@ class Req(metaclass=Singleton):
         res = self.session.post(url, data=payload)
 
         if res.status_code > 299:
-            self.log.error(f"URL: {url}")
-            self.log.error(f"Payload: {payload}")
-            self.log.error(f"STATUS: {res.status_code}")
-            self.log.error(f"RESPONSE: {res.text}")
+            logger.error(f"URL: {url}")
+            logger.error(f"Payload: {payload}")
+            logger.error(f"STATUS: {res.status_code}")
+            logger.error(f"RESPONSE: {res.text}")
             return
         elif 'error' in res.json():
-            self.log.error(res.json()['error'])
+            logger.error(res.json()['error'])
             return
 
         return res.json()

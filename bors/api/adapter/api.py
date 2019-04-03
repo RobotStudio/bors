@@ -60,14 +60,10 @@ class ApiAdapter(ApiProduct):
 
     def _generate_request(self, callname, request):
         """Generate a request object for delivery to the API"""
-        # Retrieve path from API class
-        schema = self.api.request_schema()
-        schema.context['callname'] = callname
-        return schema.dump(request).data.get("payload")
+        request = self.api.request(callname=callname, request=request)
+        return request.get("payload")
 
     def _generate_result(self, callname, result):
         """Generate a results object for delivery to the context object"""
-        # Retrieve path from API class
-        schema = self.api.result_schema()
-        schema.context['callname'] = callname
-        self.callback(schema.load(result), self.context)
+        response = self.api.result(callname=callname, result=result)
+        self.callback(response, self.context)

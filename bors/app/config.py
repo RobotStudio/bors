@@ -3,7 +3,6 @@
 import json
 
 from bors.common.dict_merge import dict_merge
-from bors.generics.config import ConfSchema
 
 
 DEFAULT_CONFIG = {
@@ -18,7 +17,6 @@ DEFAULT_CONFIG = {
 
 class AppConf:
     """Application-wide configuration singleton"""
-    schema = ConfSchema
     conf = None
     raw_conf = None
     services_by_name = {}  # type: dict
@@ -32,7 +30,7 @@ class AppConf:
             conf = config
 
         dict_merge(self.raw_conf, conf)
-        self.conf = self.schema().load(self.raw_conf).data
+        self.conf = self.raw_conf
 
     def get_api_services_by_name(self):
         """Return a dict of services by name"""

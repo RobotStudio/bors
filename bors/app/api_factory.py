@@ -10,8 +10,6 @@ from bors.api.adapter.socketcluster import SCAdapter
 
 class ApiMetaAdapter:
     """Adapter of adapters for all API instantiations"""
-    name = "api"
-
     def __init__(self, contexts):
         self.apis = []  # type: list
         self.wsocks = []  # type: list

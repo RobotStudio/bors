@@ -8,9 +8,6 @@ class IApi:
     # Use name to create a name for your api interface, and use the same
     #  name in your config
     name = "default"
-    result_schema = None
-    ws_result_schema = None
-    request_schema = None
     ENDPOINT_OVERRIDES = None
 
     def shutdown(self):
