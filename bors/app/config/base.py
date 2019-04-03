@@ -15,7 +15,7 @@ DEFAULT_CONFIG = {
 }
 
 
-class AppConf:
+class AppConfig:
     """Application-wide configuration singleton"""
     conf = None
     raw_conf = None
