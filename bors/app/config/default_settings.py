@@ -9,9 +9,17 @@ RATE_LIMIT: float = 1
 """Global rate limit to use.  This gets overriden by the API plugins."""
 
 
-API_PLUGINS: list = []
+API_ADAPTERS: tuple = ()
 """API interfacing modules to include in the application."""
 
 
-MIDDLEWARES: list = []
+MIDDLEWARES: tuple = ()
 """Middleware modules to execute strategies in incumbant data."""
+
+
+TRANSPORTS: tuple = ()
+"""Transports to include. (HTTP, gRPC, websocket, etc.)"""
+
+
+INSTALLED_APPS: tuple = ()
+"""The applications which define the application."""

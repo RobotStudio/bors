@@ -1,7 +1,8 @@
 """Config initialization"""
 
-from bors.app.config.base import AppConfig
+from bors.app.config.base import Settings, AppConfig
 
 
-CONFIG = AppConfig()
-settings = CONFIG.settings  # NOQA
+settings = Settings()  # NOQA
+
+__all__ = ('settings', 'AppConfig')

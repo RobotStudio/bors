@@ -3,11 +3,10 @@
 """Used to validate that thing work as expected"""
 
 from bors.app.strategy import IStrategy
-from bors.app.config import AppConfig
+from bors.app.config import settings, AppConfig
 from bors.app.builder import AppBuilder
 from bors.app.strategy import Strategy
 
-from bors.algorithms.echo import echo
 from bors.common.dotobj import DotObj
 
 
@@ -41,7 +40,7 @@ class Result(DotObj):
         super().__init__(**kwargs)
 
 
-class MyAPI:
+class MyAPI(ApiAdapter):
     """
     Mock API (doesn't do anything, but drop a message on the pipeline upon
     request.
@@ -56,6 +55,10 @@ class MyAPI:
     def call(self, callname, data=None, **args):
         """Mock call interface"""
         return {"test": "Success", "call": callname}
+
+class MyApp(AppConfig):
+    name "MyApp"
+    calls = ()
 
 
 def main():

@@ -8,23 +8,34 @@ from bors.app import logger
 
 class AppBuilder:
     """Class that assembles and runs the application"""
-    def __init__(self, api_classes, strategy):
-        self.api_contexts = {}  # type: dict
-        self.exit = False
+    loaded_modules: list = {}
 
-        for api in settings.get_api_services_by_name().keys():
-            logger.debug(f"Found configured service: {api}")
-            # Only build out APIs that have interfaces AND configurations
-            for api_cls in api_classes:
-                if api_cls.name == api:
-                    self.api_contexts[api] = \
-                        self.create_api_context(api_cls).data
-                    break
-                else:
-                    logger.debug(f"Skipping... {api}")
+    apis: tuple = ()
+    middlewares: tuple = ()
+    transports: tuple = ()
+    apps: tuple = ()
 
-        self.api = ApiMetaAdapter(self.api_contexts)
-        self.strat = strategy
+    def __init__(self):
+        for import_type in settings.import_types:
+            for entry in getattr(settings, import_type):
+                self.load(import_type, entry)
+
+    def load(self, import_type, module):
+
+
+        #for api in settings.get_api_services_by_name().keys():
+        #    logger.debug(f"Found configured service: {api}")
+        #    # Only build out APIs that have interfaces AND configurations
+        #    for api_cls in api_classes:
+        #        if api_cls.name == api:
+        #            self.api_contexts[api] = \
+        #                self.create_api_context(api_cls).data
+        #            break
+        #        else:
+        #            logger.debug(f"Skipping... {api}")
+
+        self.api = ApiMetaAdapter(self.loaded_modules['API_ADAPTERS'])
+        #self.strat = strategy
 
     def create_api_context(self, cls):
         """Create and return an API context"""

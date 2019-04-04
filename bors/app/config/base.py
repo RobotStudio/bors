@@ -4,21 +4,64 @@ import os
 import json
 import importlib
 
+from threading import RLock
+
 from bors.config import default_settings
 
 
 class Settings:
     """Application settings"""
+    import_types = (
+        'API_ADAPTERS',
+        'MIDDLEWARES',
+        'TRANSPORTS',
+        'INSTALLED_APPS',
+    )
+
+    loaded_mods: dict = {}
+
+    _lock = RLock()
+    loading = False
+    ready: dict = {}
+
     def __init__(self, settings_module):
         self.module = importlib.import_module(settings_module)
 
         self.configure(default_settings)
         self.configure(self.module)
 
-    def configure(self, settings):
-        for setting in dir(settings):
+        self.ready = {_type: False for _type in self.import_types}
+
+    def configure(self, settings_module):
+        for setting in dir(settings_module):
             if setting.isupper():
-                setattr(self, setting, getattr(settings, setting))
+                setting_val = getattr(settings_module, setting)
+                if setting in self.import_types:
+                    if not isinstance(setting, (list, tuple)):
+                        raise ValueError(f"{setting} must be a list or tuple.")
+                    #self.load(setting, setting_val)
+                setattr(self, setting, setting_val)
+
+    def load(self, import_type, modules):
+        if self.ready[import_type]:
+            return
+
+        with self._lock:
+            if self.ready[import_type]:
+                return
+
+            if self.loading:
+                raise RuntimeError("Loading isn't reentrant")
+            self.loading = True
+
+            for entry in modules:
+                if entry in self.loaded_mods:
+                    raise ValueError(f"Duplicate {import_type}: {entry}")
+                mod = importlib.import_module(entry)
+                inst = mod(self)
+                self.loaded_mods[entry] = inst
+
+            self.ready[import_type] = True
 
     def get_api_services_by_name(self):
         """Return a dict of services by name"""
@@ -83,7 +126,7 @@ class Settings:
 
 
 class AppConfig:
-    """Application-wide configuration singleton"""
+    """Application configuration base"""
     services_by_name = {}  # type: dict
 
     def __init__(self, config=None):
