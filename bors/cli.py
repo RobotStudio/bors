@@ -5,6 +5,7 @@ import os
 import sys
 import click
 
+from bors import __version__
 from bors.bors import Bors
 
 
@@ -12,13 +13,21 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 TEMPLATES_PATH = os.path.join(ROOT_DIR, 'templates')
 
 
-@click.group()
+def show_help(command):
+    """Display the help using click.echo"""
+    with click.Context(command) as ctx:
+        click.echo(command.get_help(ctx))
+
+
+@click.group(invoke_without_command=True)
 @click.option('-V', '--version', is_flag=True, help='Display version and exit')
 def main(version):
     """Console script for bors.
     """
     if version:
         click.echo(__version__)
+    else:
+        show_help(main)
     return 0
 
 
@@ -40,7 +49,7 @@ def generate():
 
 
 @generate.command()
-@click.argument('APIName', help='The name of the API to integrate with.')
+@click.argument('APIName') #, help='The name of the API to integrate with.')
 def api():
     """Generate stubs for interacting with an API"""
     click.echo("Generating an API")
