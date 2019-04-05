@@ -1,7 +1,7 @@
-========
+=====
 Usage
-========
+=====
 
-To use Bors Service Integrator in a project::
+To use Bors in a project::
 
     import bors
