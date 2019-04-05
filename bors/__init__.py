@@ -5,3 +5,6 @@
 __author__ = """Bobby"""
 __email__ = 'karma0@gmail.com'
 __version__ = '0.3.6'
+
+
+from bors.bors import Bors  # NOQA

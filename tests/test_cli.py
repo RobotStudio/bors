@@ -7,7 +7,7 @@ import pytest
 
 from click.testing import CliRunner
 
-from bors import Bors, __version__
+from bors import bors, __version__
 from bors import cli
 
 
