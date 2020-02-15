@@ -1,5 +1,5 @@
 -r test.txt
-coloredlogs==10.0
+coloredlogs==11.1
 cryptography==2.8
 watchdog==0.9.0
 flake8==3.7.8
