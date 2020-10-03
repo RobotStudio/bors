@@ -2,6 +2,6 @@
 coloredlogs==10.0
 cryptography==2.8
 watchdog==0.9.0
-flake8==3.7.8
+flake8==3.8.4
 Sphinx==2.2.0
 wheel==0.33.6
