@@ -1,6 +1,6 @@
 -r test.txt
 coloredlogs==10.0
-cryptography==2.8
+cryptography==40.0.1
 watchdog==0.9.0
 flake8==3.7.8
 Sphinx==2.2.0
